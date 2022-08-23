@@ -1,36 +1,37 @@
 import React from 'react';
+import io from "socket.io-client";
 
 function UserGreeting(props) {
     return <h1>Welcome back!</h1>;
-  }
-  
-  function GuestGreeting(props) {
+}
+
+function GuestGreeting(props) {
     return <h1>Please sign up.</h1>;
-  }
+}
 
 function Greeting(props) {
     const isLoggedIn = props.isLoggedIn;
     if (isLoggedIn) {
-      return <UserGreeting />;
+        return <UserGreeting/>;
     }
-    return <GuestGreeting />;
-  }
+    return <GuestGreeting/>;
+}
 
 function LoginButton(props) {
     return (
-      <button onClick={props.onClick}>
-        Login
-      </button>
+        <button onClick={props.onClick}>
+            Login
+        </button>
     );
-  }
-  
-  function LogoutButton(props) {
+}
+
+function LogoutButton(props) {
     return (
-      <button onClick={props.onClick}>
-        Logout
-      </button>
+        <button onClick={props.onClick}>
+            Logout
+        </button>
     );
-  }
+}
 
 class LoginControl extends React.Component {
 
@@ -39,32 +40,39 @@ class LoginControl extends React.Component {
         this.handleLoginClick = this.handleLoginClick.bind(this);
         this.handleLogoutClick = this.handleLogoutClick.bind(this);
         this.state = {isLoggedIn: false};
-      }
+    }
 
     handleLoginClick() {
+        // const socket = io("ws://localhost:10001");
+        // socket.on('my_response', function(msg, ack) {
+        //     console.log("msg", msg);
+        //     if(ack) {
+        //         ack();
+        //     }
+        // });
         this.setState({isLoggedIn: true});
-      }
-    
-      handleLogoutClick() {
+    }
+
+    handleLogoutClick() {
         this.setState({isLoggedIn: false});
-      }
+    }
 
     render() {
         const isLoggedIn = this.state.isLoggedIn;
         let button;
         if (isLoggedIn) {
-          button = <LogoutButton onClick={this.handleLogoutClick} />;
+            button = <LogoutButton onClick={this.handleLogoutClick}/>;
         } else {
-          button = <LoginButton onClick={this.handleLoginClick} />;
+            button = <LoginButton onClick={this.handleLoginClick}/>;
         }
-    
+
         return (
-          <div>
-            <Greeting isLoggedIn={isLoggedIn} />
-            {button}
-          </div>
+            <div>
+                <Greeting isLoggedIn={isLoggedIn}/>
+                {button}
+            </div>
         );
-      }
+    }
 }
 
 export default LoginControl;
